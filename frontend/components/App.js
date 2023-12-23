@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Card from "./Card";
 
 const api_key = "DEMO_KEY";
 const URL = `https://api.nasa.gov/planetary/apod?api_key=${api_key}`;
-import Card from "./Card";
 
 function App() {
-  const [apod, setApod] = useState();
+  const [apod, setApod] = useState(null); // Provide a default value of null
 
   useEffect(() => {
     function fetchPhoto() {
@@ -17,11 +17,11 @@ function App() {
           setApod(res.data);
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error("Error fetching photo:", err.message); // Provide a more meaningful error message
         });
     }
+
     fetchPhoto();
-    // setApod();
   }, []);
 
   if (!apod) return "Fetching Photo of the Day...";
